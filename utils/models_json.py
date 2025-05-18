@@ -84,7 +84,7 @@ def download_and_convert_model(directory_path, download, metadata):
     updated_metadata['upcast_attention'] = False
   # Update the files available in converted dictionary.
   for converted_file in converted.keys():
-      cmd = ['aws', 's3', 'cp', os.path.join(build, converted_file), 's3://static-libnnc/', '--endpoint-url', 'https://cd96f610b0bb2657da157aca332052ec.r2.cloudflarestorage.com', '--region', 'auto']
+      cmd = ['aws', 's3', 'cp', '--checksum-algorithm=CRC32', os.path.join(build, converted_file), 's3://static-libnnc/', '--endpoint-url', 'https://cd96f610b0bb2657da157aca332052ec.r2.cloudflarestorage.com', '--region', 'auto']
       result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
       if result.returncode != 0:
         print(f"fail to upload, stdout: {result.stdout}, stderr: {result.stderr}")
@@ -169,6 +169,7 @@ def collect_metadata_from_list(file_path):
             q5p_file = file[:-len('_q8p.ckpt')] + '_q5p.ckpt'
             q5p_svd_file = file[:-len('_q8p.ckpt')] + '_q5p_svd.ckpt'
             q6p_file = file[:-len('_q8p.ckpt')] + '_q6p.ckpt'
+            q6p_svd_file = file[:-len('_q8p.ckpt')] + '_q6p_svd.ckpt'
             if q5p_file in converted:
               metadata['file'] = q5p_file
               metadata['name'] = metadata['name'] + ' (5-bit)'
@@ -193,6 +194,15 @@ def collect_metadata_from_list(file_path):
               for k, v in metadata.items():
                 if v == file:
                   metadata[k] = q6p_file
+              metadata_array.append(copy.deepcopy(metadata))
+            elif q6p_svd_file in converted:
+              metadata['file'] = q6p_svd_file
+              metadata['builtin_lora'] = True
+              metadata['name'] = metadata['name'] + ' (6-bit, SVDQuant)'
+              # Update other fields have reference to this file.
+              for k, v in metadata.items():
+                if v == file:
+                  metadata[k] = q6p_svd_file
               metadata_array.append(copy.deepcopy(metadata))
   return metadata_array, sha256_dict
 

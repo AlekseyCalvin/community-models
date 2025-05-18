@@ -16,11 +16,13 @@
       "condition_scale" : 1000
     }
   },
+  "frames_per_second": 24,
+  "tea_cache_coefficients": [7.33226126e+02, -4.01131952e+02,  6.75869174e+01, -3.14987800e+00, 9.61237896e-02],
   "note": "[SkyReels v1](https://huggingface.co/collections/Skywork/skyreels-v1-67b34676ff65b4ec02d16307) is a significant fine-tune of Hunyuan Video, Tencent’s state-of-the-art text-to-video model. It can generate video clips up to 4 seconds long at a recommended resolution of 960×544. The model supports up to 97 frames, with a recommended shift value of 7.0 or higher. For optimal results, disable \"Speedup w/ Guidance Embed\" by setting it to 1.0 and use a Text Guidance value of 6.",
   "converted": {
     "skyreels_v1_hunyuan_t2v_q8p.ckpt": "b6b83c819936abb296235ff3e6d586337b8fe8410257229aaf60ba2459cf8ddb",
     "skyreels_v1_hunyuan_t2v_q5p_svd.ckpt": "c41f314d26c502b413c69455ba78956bb049f02689aea06faa6a3f26a3dcaa8b",
     "hunyuan_video_vae_f16.ckpt": "ae7745bce49371893085d4edb62d2f602ddb68cc064615d9dacdee82865334fd",
-    "llava_llama_3_8b_v1.1_q8p.ckpt": "2e498fdda5ef906079990b03095aeeb4a584663fd2db78c949ec6ca18c28f24a"
+    "llava_llama_3_8b_v1.1_q8p.ckpt": "3ce75e9763350db0450ed8b9a986334888e76970e1ba76c4515cded6daf6ad40"
   }
 }
